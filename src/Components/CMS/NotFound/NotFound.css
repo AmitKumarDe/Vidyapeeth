@@ -1,0 +1,21 @@
+/* CSS for the NotFound component */
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .not-found-heading {
+    font-size: 48px;
+    font-weight: bold;
+    color: #f00; /* Red color for the heading */
+    margin-bottom: 20px;
+  }
+  
+  .not-found-text {
+    font-size: 24px;
+    color: #333; /* Dark gray color for the text */
+  }
+  
