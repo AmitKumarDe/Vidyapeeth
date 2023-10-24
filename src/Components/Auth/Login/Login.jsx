@@ -168,9 +168,9 @@ const Login = () => {
                     </button>
                     <div className="divider d-flex align-items-center my-3">
                       <p className="text-center fw-bold mx-3 mb-0 text-muted">
-                        DONT HAVE AN ACCOUNT?{" "}
+                        DON &apos; T HAVE AN ACCOUNT?{" "}
                         <Link to="/register" onClick={newRegistration}>
-                          <b>REGISTER HERE</b>
+                          <b> REGISTER HERE </b>
                         </Link>
                       </p>
                     </div>
@@ -188,7 +188,7 @@ const Login = () => {
                       <p className="text-center fw-bold mx-3 mb-0 text-muted">
                         DONT HAVE AN ACCOUNT?
                         <Link to="/register" onClick={newRegistration}>
-                          <b>REGISTER HERE</b>
+                          <b> REGISTER HERE </b>
                         </Link>
                       </p>
                     </div>

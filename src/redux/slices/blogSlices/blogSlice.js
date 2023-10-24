@@ -10,7 +10,6 @@ export const allBlog = createAsyncThunk("/allBlog", async () => {
 
 export const getBanners = createAsyncThunk("/banner", async () => {
   const res = await axiosInstance.get(`/banner`);
-  console.log(`banner`, res.data.bannerdata);
   return res.data.bannerdata;
 });
 
@@ -35,12 +34,12 @@ export const getComments = createAsyncThunk("/comment/:id", async (_id) => {
 
 export const createComment = createAsyncThunk(
   "/blog/:id/comment/create",
-  async ({ postData }) => {
+  async (postData) => {
     const res = await axiosInstance.post(
       `/blog/${postData.id}/comment/create`,
       postData
     );
-    return res;
+    return res.data;
   }
 );
 
@@ -71,11 +70,9 @@ export const blogSlice = createSlice({
       .addCase(allBlog.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
         state.blogs = payload.data;
-        console.log(payload);
       })
       .addCase(allBlog.rejected, (state, { payload }) => {
         state.status = "failed";
-        console.log(payload?.message);
         state.error = payload?.message;
         toast.error(payload?.message);
       })
@@ -88,11 +85,9 @@ export const blogSlice = createSlice({
       .addCase(getBanners.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
         state.allBanners = payload;
-        console.log(payload);
       })
       .addCase(getBanners.rejected, (state, { payload }) => {
         state.status = "failed";
-        console.log(payload?.message);
         state.error = payload?.message;
         toast.error(payload?.message);
       })
@@ -131,16 +126,14 @@ export const blogSlice = createSlice({
       })
       .addCase(getComments.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        // console.log(payload);
         state.allComments = payload;
-        console.log(payload);
       })
       .addCase(getComments.rejected, (state, { payload }) => {
         state.status = "failed";
-
         state.error = payload?.message;
         toast.error(payload?.message);
       })
+
       //* create comments
       .addCase(createComment.pending, (state) => {
         state.status = "loading";
@@ -148,7 +141,8 @@ export const blogSlice = createSlice({
       .addCase(createComment.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
         state.createComment = payload;
-        console.log(payload);
+        state.message = payload.data.message;
+        toast.success(payload.data.message);
       })
       .addCase(createComment.rejected, (state, { payload }) => {
         state.status = "failed";

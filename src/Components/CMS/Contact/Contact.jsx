@@ -1,16 +1,14 @@
 import { useDispatch } from "react-redux";
 import PageHeader from "../PageHeader/PageHeader";
-import { useEffect } from "react";
+
 import { contactUs } from "../../../redux/slices/post/postSlice";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Swal from "sweetalert2";
 
 const Contact = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(contactUs());
-  }, [dispatch]);
 
   const pageTitle = "Contact";
   const breadcrumbLinks = [
@@ -29,6 +27,7 @@ const Contact = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset, // Add the reset function from react-hook-form
   } = useForm({ resolver: zodResolver(contactSchema) });
 
   const onSubmit = async (data) => {
@@ -39,8 +38,29 @@ const Contact = () => {
       phone: data.phone,
       message: data.message,
     };
-    dispatch(contactUs(postData));
+    dispatch(contactUs({ postData }))
+      .then((result) => {
+        // Reset the form
+        reset();
+        // Show a SweetAlert
+        if (result.payload && result.payload.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Message sent successfully',
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to send message',
+          });
+        }
+      });
   };
+
+
+
   return (
     <>
       <PageHeader pageTitle={pageTitle} breadcrumbLinks={breadcrumbLinks} />

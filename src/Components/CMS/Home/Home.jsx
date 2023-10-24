@@ -18,6 +18,10 @@ import CountUp from "react-countup";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const { allBanners } = useSelector((state) => state.blog);
+  const { courses, teamMembers, testimonials } = useSelector(
+    (state) => state.courses
+  );
   useEffect(() => {
     dispatch(allBlog());
     dispatch(getTeam());
@@ -27,13 +31,9 @@ const Home = () => {
     dispatch(getBanners());
   }, [dispatch]);
 
-  const { allBanners } = useSelector((state) => state.blog);
-  const { courses, teamMembers, testimonials } = useSelector(
-    (state) => state.courses
-  );
-  console.log(allBanners);
+  // console.log(allBanners);
 
-  console.log(testimonials);
+  // console.log(testimonials);
 
   const options = {
     items: 4,
@@ -69,16 +69,6 @@ const Home = () => {
                     src={`https://restapinodejs.onrender.com/api/banner/photo/${banner._id}`}
                     alt={banner.title}
                   />
-                  <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div style={{ maxWidth: 900, marginBottom: "350px" }}>
-                      <h1 className=" text-uppercase mb-md-3">
-                        {banner.title}
-                      </h1>
-                      {/* <span className="display-6 mb-md-4 ">
-                        {banner.description}
-                      </span> */}
-                    </div>
-                  </div>
                 </div>
               </div>
             ))}
@@ -348,16 +338,18 @@ const Home = () => {
                   <div className="col-sm-6">
                     <div className="form-group">
                       <select
+                        name="course" 
                         className="custom-select bg-light border-0 px-3"
                         style={{ height: 60 }}
                       >
-                        <option selected="">Select A courses</option>
-                        <option value={1}>courses 1</option>
-                        <option value={2}>courses 1</option>
-                        <option value={3}>courses 1</option>
+                        <option value="">Select A Course</option>
+                        <option value="1">Course 1</option>
+                        <option value="2">Course 2</option>
+                        <option value="3">Course 3</option>
                       </select>
                     </div>
                   </div>
+
                   <div className="col-sm-6">
                     <button
                       className="btn btn-primary btn-block"

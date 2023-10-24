@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 export const login = createAsyncThunk("/login", async (formData) => {
   const res = await axiosInstance.post(`/login`, formData);
-  console.log({res});
   const resData = res?.data;
   return resData;
 });
@@ -31,7 +30,6 @@ export const AuthSlice = createSlice({
     },
     logout: () => {
       localStorage.removeItem("token");
-      localStorage.removeItem("profile_pic");
       localStorage.removeItem("email");
       toast.success("Logout Successfully");
     },
@@ -48,10 +46,11 @@ export const AuthSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        console.log(payload);
         if (payload.status === 200) {
           state.redirect = "/";
           localStorage.setItem("token", payload?.token);
+          localStorage.setItem("email", payload?.user.email);
+          localStorage.setItem("mobile", payload?.user.mobile);
           toast.success(payload?.message);
         } else if (payload.status === 201) {
           toast.error(payload?.message);
@@ -59,7 +58,6 @@ export const AuthSlice = createSlice({
       })
       .addCase(login.rejected, (state, { payload }) => {
         state.status = "failed";
-        console.log(payload?.message);
         state.error = payload?.message;
         toast.error(payload?.message);
       })
@@ -70,9 +68,8 @@ export const AuthSlice = createSlice({
         state.status = "loading";
       })
       .addCase(signup.fulfilled, (state, { payload }) => {
-        state.status = "succeeded";
-        console.log(payload);
-        if (payload.status === 200) {
+        state.status = true;
+        if (payload.status === true) {
           state.redirect = "/login";
           localStorage.setItem("fullname", payload?.data.name);
           toast.success(payload?.message);

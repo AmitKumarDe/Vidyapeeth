@@ -19,7 +19,7 @@ import { z } from "zod";
 const CourseDetail = () => {
   const dispatch = useDispatch();
   const { courseId } = useParams();
-  // console.log(courseId);
+  console.log(courseId);
 
   const schema = z.object({
     name: z.string().min(2, "Full name is required"),
@@ -37,7 +37,9 @@ const CourseDetail = () => {
     comment: z.string().min(2, "Comment  is required"),
   });
 
-  const { register, handleSubmit } = useForm({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, reset } = useForm({
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit = async (data) => {
     const postData = {
@@ -46,7 +48,10 @@ const CourseDetail = () => {
       email: data.email,
       comment: data.comment,
     };
-    dispatch(createComment(postData));
+    dispatch(createComment(postData)).then(() => {
+      dispatch(getComments(courseId));
+    });
+    reset();
   };
 
   const pageTitle = "Course Detail";
@@ -86,13 +91,11 @@ const CourseDetail = () => {
                   alt="Image"
                 />
 
-                <p>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: blogDetails?.postText,
-                    }}
-                  />
-                </p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: blogDetails?.postText,
+                  }}
+                />
               </div>
 
               <div

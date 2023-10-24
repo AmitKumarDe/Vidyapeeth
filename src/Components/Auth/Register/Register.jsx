@@ -140,6 +140,8 @@ const Register = () => {
                     <input
                       className="form-control form-control-lg"
                       placeholder="Enter Your Mobile Number"
+                      minLength={10}
+                      maxLength={10}
                       {...register("mobile")}
                     />
                     {errors.mobile && (
@@ -159,6 +161,8 @@ const Register = () => {
                         id="floatingPassword"
                         className="form-control form-control-lg"
                         placeholder="Password"
+                        minLength={8}
+                        maxLength={20}
                         {...register("password")}
                       />
                       <button

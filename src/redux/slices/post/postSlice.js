@@ -16,7 +16,7 @@ export const getServices = createAsyncThunk("/service", async () => {
 
 export const contactUs = createAsyncThunk(
   "/contact/create",
-  async (postData) => {
+  async ({ postData }) => {
     const res = await axiosInstance.post(`/contact/create`, postData);
     const resData = res?.data;
     return resData;
@@ -24,9 +24,11 @@ export const contactUs = createAsyncThunk(
 );
 
 const initialState = {
-  status: "",
+  status: "idle",
+  success: false,
   recentPosts: [],
   services: [],
+  error: null,
 };
 
 export const postSlice = createSlice({
@@ -57,27 +59,30 @@ export const postSlice = createSlice({
       .addCase(getServices.fulfilled, (state, { payload }) => {
         state.status = "success";
         state.services = payload.data;
-        console.log(payload);
-        toast.success("Services fetched successfully");
       })
       .addCase(getServices.rejected, (state, { payload }) => {
         state.status = "failed";
         state.error = payload?.message;
         toast.error(payload?.message);
       })
+
       //* ContactUs
       .addCase(contactUs.pending, (state) => {
         state.status = "loading";
       })
       .addCase(contactUs.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        // state.services = payload.data;
-        console.log(payload);
+        state.success = true;
+        state.message = payload.message;
+        state.error = null;
+        toast.success(
+          "Contact form submitted successfully: " + payload.message
+        );
       })
-      .addCase(contactUs.rejected, (state, { payload }) => {
+      .addCase(contactUs.rejected, (state, { error }) => {
         state.status = "failed";
-        state.error = payload?.message;
-        toast.error(payload?.message);
+        state.error = error.message;
+        state.success = false;
       });
   },
 });

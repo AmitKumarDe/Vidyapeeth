@@ -1,16 +1,18 @@
-import { useParams } from "react-router-dom";
+import "./ApplyCourse.css";
+import { NavLink, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { applyCourse } from "../../../redux/slices/course/courseSlice";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Swal from "sweetalert2";
 
 // import { applyCourse } from "../Redux/courseSlice";
 const ApplyCourse = () => {
   //   const { loading } = useSelector((state) => state.courses);
   //   console.log(loading);
   const { courseId } = useParams();
-  console.log(courseId);
+
   const dispatch = useDispatch();
   //   const navigate = useNavigate();
 
@@ -29,10 +31,10 @@ const ApplyCourse = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({ resolver: zodResolver(applyCourseSchema) });
-  const onSubmit = (data) => {
-    console.log(data);
 
+  const onSubmit = (data) => {
     const postData = {
       name: data.name,
       email: data.email,
@@ -43,7 +45,16 @@ const ApplyCourse = () => {
       experiance: data.experiance,
       programing_knowledge: data.programing_knowledge,
     };
-    dispatch(applyCourse({ postData, courseId }));
+    dispatch(applyCourse({ postData, courseId })).then((response) => {
+      if (response.payload) {
+        Swal.fire({
+          title: "Success!",
+          text: "Your course application has been submitted successfully.",
+          icon: "success",
+        });
+      }
+    });
+    reset();
   };
 
   return (
@@ -76,20 +87,20 @@ const ApplyCourse = () => {
                   Diam dolor diam elitripsum vero.
                 </li>
               </ul>
-              <a href className="btn btn-primary mt-4 py-2 px-4">
+              <NavLink to="" className="btn btn-primary mt-4 py-2 px-4">
                 Book Now
-              </a>
+              </NavLink>
             </div>
             <div className="col-lg-5">
               <div className="card border-0">
-                <div className="card-header bg-secondary text-center p-4">
-                  <h1 className="text-white m-0">Apply for course</h1>
+                <div className="card-header bg-secondary text-center p-2">
+                  <h1 className="text-white m-0">Apply For Course</h1>
                 </div>
                 <div className="card-body rounded-bottom bg-light p-5">
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="row g-3">
+                    <div className="row g-1">
                       <div className="col-sm-6">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
@@ -109,16 +120,18 @@ const ApplyCourse = () => {
                         </div>
                       </div>
                       <div className="col-sm-6">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
                           >
-                           Phone
+                            Mobile Number
                           </label>
                           <input
                             className="form-control form-control-lg"
-                            placeholder="Number is required"
+                            placeholder="Enter Your Mobile Number"
+                            minLength={10}
+                            maxLength={10}
                             {...register("phone")}
                           />
                           {errors.phone && (
@@ -129,7 +142,7 @@ const ApplyCourse = () => {
                         </div>
                       </div>
                       <div className="col-sm-6">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
@@ -150,16 +163,16 @@ const ApplyCourse = () => {
                         </div>
                       </div>
                       <div className="col-sm-6">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
                           >
-                            city
+                            City
                           </label>
                           <input
                             className="form-control form-control-lg"
-                            placeholder="Enter Your city"
+                            placeholder="Enter Your City"
                             {...register("city")}
                           />
                           {errors.city && (
@@ -170,7 +183,7 @@ const ApplyCourse = () => {
                         </div>
                       </div>
                       <div className="col-12">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
@@ -190,7 +203,7 @@ const ApplyCourse = () => {
                         </div>
                       </div>
                       <div className="col-12">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
@@ -199,7 +212,7 @@ const ApplyCourse = () => {
                           </label>
                           <input
                             className="form-control form-control-lg"
-                            placeholder="Enter Your Qualification details"
+                            placeholder="Enter Your Qualification Details"
                             {...register("qualification")}
                           />
                           {errors.qualification && (
@@ -210,7 +223,7 @@ const ApplyCourse = () => {
                         </div>
                       </div>
                       <div className="col-12">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
@@ -219,7 +232,7 @@ const ApplyCourse = () => {
                           </label>
                           <input
                             className="form-control form-control-lg"
-                            placeholder="Enter Your programming language"
+                            placeholder="Enter Your Programming Language"
                             {...register("programing_knowledge")}
                           />
                           {errors.programing_knowledge && (
@@ -231,7 +244,7 @@ const ApplyCourse = () => {
                       </div>
 
                       <div className="col-12">
-                        <div className="form-outline mb-3">
+                        <div className="form-outline mb-2">
                           <label
                             className="form-label"
                             htmlFor="form1Example13"
@@ -263,9 +276,12 @@ const ApplyCourse = () => {
                           </button>
                         ) : ( */}
                         <button
-                          className="btn btn-primary  w-100 py-3"
+                          className="btn btn-primary  w-100 py-2"
                           type="submit"
-                          style={{ border: "1px solid white" }}
+                          style={{
+                            border: "1px solid white",
+                            fontSize: "25px",
+                          }}
                         >
                           Submit
                         </button>
