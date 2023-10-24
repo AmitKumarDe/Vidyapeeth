@@ -61,7 +61,7 @@ const Footer = () => {
                   </p>
                   <p>
                     <i className="fa fa-phone-alt mr-2" />
-                    {userMobile}
+                    {userMobile ? <>{userMobile}</> : <>+91-9876543210</>}
                   </p>
                   <p>
                     <i className="fa fa-envelope mr-2" />

@@ -31,6 +31,7 @@ export const AuthSlice = createSlice({
     logout: () => {
       localStorage.removeItem("token");
       localStorage.removeItem("email");
+      localStorage.removeItem("mobile");
       toast.success("Logout Successfully");
     },
     newRegister: () => {
