@@ -1,3 +1,4 @@
+import { feature } from "../../../../assets/images";
 import PageHeader from "../../PageHeader/PageHeader";
 
 const OurFeatures = () => {
@@ -72,7 +73,7 @@ const OurFeatures = () => {
               <div className="position-relative h-100">
                 <img
                   className="position-absolute w-100 h-100"
-                  src="/src/assets/img/feature.jpg"
+                  src={feature}
                   style={{ objectFit: "cover" }}
                 />
               </div>

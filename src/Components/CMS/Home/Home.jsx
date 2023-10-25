@@ -15,6 +15,7 @@ import {
   getTestimonials,
 } from "../../../redux/slices/course/courseSlice";
 import CountUp from "react-countup";
+import { about, feature } from "../../../assets/images";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const Home = () => {
               <div className="position-relative h-100">
                 <img
                   className="position-absolute w-100 h-100"
-                  src="/src/assets/img/about.jpg"
+                  src={about}
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -237,7 +238,7 @@ const Home = () => {
               <div className="position-relative h-100">
                 <img
                   className="position-absolute w-100 h-100"
-                  src="/src/assets/img/feature.jpg"
+                  src={feature}
                   style={{ objectFit: "cover" }}
                 />
               </div>
@@ -338,7 +339,7 @@ const Home = () => {
                   <div className="col-sm-6">
                     <div className="form-group">
                       <select
-                        name="course" 
+                        name="course"
                         className="custom-select bg-light border-0 px-3"
                         style={{ height: 60 }}
                       >

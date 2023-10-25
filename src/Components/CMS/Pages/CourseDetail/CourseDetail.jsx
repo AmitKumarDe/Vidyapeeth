@@ -15,6 +15,7 @@ import { getRecentPosts } from "../../../../redux/slices/post/postSlice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { courses, courses1, courses2, courses3 } from "../../../../assets/images";
 
 const CourseDetail = () => {
   const dispatch = useDispatch();
@@ -196,7 +197,7 @@ const CourseDetail = () => {
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/img/courses-1.jpg"
+                    src={courses1}
                     alt=""
                   />
                   <div className="courses-text">
@@ -224,7 +225,7 @@ const CourseDetail = () => {
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/img/courses-2.jpg"
+                    src={courses2}
                     alt=""
                   />
                   <div className="courses-text">
@@ -252,7 +253,7 @@ const CourseDetail = () => {
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/img/courses-3.jpg"
+                    src={courses3}
                     alt=""
                   />
                   <div className="courses-text">
@@ -340,7 +341,7 @@ const CourseDetail = () => {
                   >
                     <img
                       className="img-fluid rounded"
-                      src="/src/assets/img/courses-80x80.jpg"
+                      src={courses}
                       alt=""
                     />
                     <div className="pl-3">
