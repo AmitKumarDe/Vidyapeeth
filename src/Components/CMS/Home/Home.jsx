@@ -390,9 +390,10 @@ const Home = () => {
               <div className="team-item item" key={index}>
                 {" "}
                 <img
-                  className="img-fluid w-100"
+                  className="img-fluid "
                   src={`https://restapinodejs.onrender.com/api/team/photo/${team._id}`}
                   alt=""
+                  style={{ width: "100%", height: "45vh" }}
                 />
                 <div className="bg-light text-center p-4">
                   <h5 className="mb-3">{team.name}</h5>
