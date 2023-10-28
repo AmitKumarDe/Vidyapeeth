@@ -60,6 +60,7 @@ const Home = () => {
             autoplay={true}
             autoplayTimeout={4000}
             dots={false}
+          
             data-bs-ride="carousel"
           >
             {allBanners.map((banner, index) => (

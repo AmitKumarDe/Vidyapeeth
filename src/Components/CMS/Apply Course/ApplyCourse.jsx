@@ -64,7 +64,7 @@ const ApplyCourse = () => {
           <div className="row align-items-center">
             <div className="col-lg-7 mb-5 mb-lg-0">
               <p className="section-title pr-5">
-                <span className="pr-2">Register for course</span>
+                <span className="pr-2">Register for course </span>
               </p>
               <h1 className="mb-4">Register A Course </h1>
               <p>

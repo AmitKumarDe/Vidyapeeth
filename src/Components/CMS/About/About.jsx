@@ -1,5 +1,6 @@
 import CountUp from "react-countup";
 import PageHeader from "../PageHeader/PageHeader";
+import { about, feature } from "../../../assets/images";
 
 const About = () => {
   const pageTitle = "About";
@@ -19,7 +20,7 @@ const About = () => {
                 <div className="position-relative h-100">
                   <img
                     className="position-absolute w-100 h-100"
-                    src="/src/assets/img/about.jpg"
+                    src={about}
                     style={{ objectFit: "cover" }}
                   />
                 </div>
@@ -152,7 +153,7 @@ const About = () => {
                 <div className="position-relative h-100">
                   <img
                     className="position-absolute w-100 h-100"
-                    src="/src/assets/img/feature.jpg"
+                    src={feature}
                     style={{ objectFit: "cover" }}
                   />
                 </div>
