@@ -11,7 +11,11 @@ export const login = createAsyncThunk("/login", async (formData) => {
 export const signup = createAsyncThunk("/register", async (formData) => {
   const res = await axiosInstance.post(`/register`, formData);
   const resData = res?.data;
-  return resData;
+  if (resData.success === true) {
+    return resData;
+  } else {
+    throw new Error(resData.msg);
+  }
 });
 
 const initialState = {
@@ -70,18 +74,19 @@ export const AuthSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, { payload }) => {
         state.status = true;
-        if (payload.status === true) {
+        if (payload.success === true) {
           state.redirect = "/login";
           localStorage.setItem("fullname", payload?.data.name);
+          console.log(payload.message);
           toast.success(payload?.message);
-        } else if (payload.status === 201) {
+        } else if (payload.status === 404) {
           toast.error(payload?.message);
         }
       })
-      .addCase(signup.rejected, (state, action) => {
+      .addCase(signup.rejected, (state, { payload }) => {
         state.status = "failed";
-        state.error = action.payload.message;
-        toast.error(action.payload.message);
+        state.error = payload.message;
+        toast.error(payload.message);
       });
   },
 });
